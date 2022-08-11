@@ -1,0 +1,17 @@
+{
+  "name": "Windows 7 Notifications",
+  "description": "Use Discord's Windows 7 fallback notifications instead of the default system notifications.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Toasty",
+    "id": "255515821541949440"
+  },
+  "id": "Win7Notifications",
+  "support": "NDzjMB2WhR",
+  "donations": [
+    {
+      "name": "Ko-fi",
+      "link": "https://ko-fi.com/slice"
+    }
+  ]
+}
