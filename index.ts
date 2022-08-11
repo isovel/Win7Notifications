@@ -20,6 +20,14 @@ class Win7Notifications extends UPlugin {
 
   start(): void {
     suppressErrors(this._patchNotifications.bind(this))(this.promises);
+    ipc.on('NOTIFICATION_CLICK', (_, e_id) => {
+      const idx = this.notifications.findIndex(x => x[0] === e_id);
+      if (idx !== -1) {
+        this.notifications[idx][5].onClick();
+        ipc.send('NOTIFICATION_CLOSE', e_id);
+        this.notifications.splice(idx, 1);
+      }
+    });
   }
 
   stop(): void {
@@ -37,17 +45,8 @@ class Win7Notifications extends UPlugin {
         icon: args[0],
       });
       playSound(args[4].sound, args[4].volume);
-      ipc.on('NOTIFICATION_CLICK', () => {
-        const idx = this.notifications.findIndex(x => x[0] === id);
-        if (idx !== -1) {
-          this.notifications[idx][5].onClick();
-          ipc.send('NOTIFICATION_CLOSE', id);
-          this.notifications.splice(idx, 1);
-        }
-      });
       setTimeout(() => {
         ipc.send('NOTIFICATION_CLOSE', id);
-        this.notifications.splice(this.notifications.findIndex(x => x[0] === id), 1);
       }, 5000);
     });
   }
